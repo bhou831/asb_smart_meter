@@ -12,3 +12,4 @@ while True:
     time.sleep(3)
     GPIO.output(red_led, GPIO.LOW)
     time.sleep(1)
+    print("Red light on")
