@@ -14,8 +14,10 @@ def main():
     while True:
         if GPIO.input(button):
             GPIO.output(red_led, GPIO.LOW)
+            print('light off')
         else:
             GPIO.output(red_led, GPIO.HIGH)
+            print('light on')
 
 if __name__ == '__main__':
     try:
