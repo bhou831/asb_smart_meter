@@ -23,13 +23,16 @@ GPIO.setup(red_led, GPIO.OUT)
 
 def main():
     filename = "analog.csv"
-    with open(filename, 'a') as file:
-        fd = csv.writer(file)
-        fd.writerow(["timestamp","voltage"])
+    
     while True:
         current_time = time.strftime("%Y-%m-%dT%H:%M:%S")
 
-        fd.writerow([current_time,channel.voltage])
+        with open(filename, 'a') as file:
+            fd = csv.writer(file)
+            if file.tell() == 0:  # Check if the file is empty
+                fd.writerow(["timestamp", "voltage"])
+            fd.writerow([current_time, channel.voltage])
+
         time.sleep(1)
 
 if __name__ == '__main__':
