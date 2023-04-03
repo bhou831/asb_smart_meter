@@ -19,7 +19,7 @@ current_channel = AnalogIn(mcp, MCP.P1)
 
 # Set up GPIO
 GPIO.setmode(GPIO.BCM)
-red_led = 18
+red_led = 22
 GPIO.setup(red_led, GPIO.OUT)
 
 # Function to convert raw ADC value to current (mA) using ACS712 sensor
