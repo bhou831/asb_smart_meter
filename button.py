@@ -18,6 +18,7 @@ def main():
         else:
             GPIO.output(red_led, GPIO.HIGH)
             print('light on')
+        time.sleep(0.1)
 
 if __name__ == '__main__':
     try:
