@@ -30,7 +30,8 @@ CurrentGainCT2 = 25498  # 25498 - SCT-013-000 100A/50mA
 # Create a live chart for the voltage, current, and power
 fig = make_subplots(rows=3, cols=1, specs=[[{'type': 'scatter'}],
                                            [{'type': 'scatter'}],
-                                           [{'type': 'scatter'}]])
+                                           [{'type': 'scatter'}]],
+                                           row_heights=[0.33, 0.33, 0.33])
 
 trace_voltage = go.Scatter(x=[], y=[], mode='lines+markers', name='Voltage')
 trace_currentA = go.Scatter(x=[], y=[], mode='lines+markers', name='CurrentA')
@@ -39,6 +40,9 @@ trace_powerA = go.Scatter(x=[], y=[], mode='lines+markers', name='PowerA')
 fig.add_trace(trace_voltage, row=1, col=1)
 fig.add_trace(trace_currentA, row=2, col=1)
 fig.add_trace(trace_powerA, row=3, col=1)
+
+#increase the height
+fig.update_layout(height=900)
 
 # Create global variables for x_data and y_data
 time_data = []
