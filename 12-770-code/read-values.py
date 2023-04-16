@@ -5,6 +5,7 @@ import time
 import csv
 from atm90e32 import ATM90e32
 from adafruit_bus_device.spi_device import SPIDevice
+import matplotlib.pyplot as plt
 
 # ***** CALIBRATION SETTINGS *****/
 lineFreq = 4485  # 4485 for 60 Hz (North America)
@@ -26,9 +27,11 @@ with open(FILE_PATH, mode='w') as csv_file:
     
     # Write the header row to the CSV file
     writer.writeheader()
+    voltage_data = []
+    time_data = []
 
     # Loop for 60 seconds
-    for i in range(20):
+    for i in range(60):
         spi_bus = busio.SPI(board.SCK, MISO=board.MISO, MOSI=board.MOSI)
         cs = digitalio.DigitalInOut(board.D5)
         energy_sensor = ATM90e32(spi_bus, cs, lineFreq, PGAGain,
@@ -50,6 +53,15 @@ with open(FILE_PATH, mode='w') as csv_file:
                          'current2': energy_sensor.line_currentC*5/0.1, 
                          'frequency': energy_sensor.frequency*60/50, 
                          'active_power': energy_sensor.active_power})
+        
+        # visualize the voltage and time
+        voltage_data.append(voltageA*120/640)             # append current voltage to list
+        time_data.append(time.time())            # append current time to list
+        plt.plot(time_data, voltage_data)        # plot the voltage data
+        plt.xlabel('Time (seconds)')
+        plt.ylabel('Voltage (V)')
+        plt.title('Live Voltage Monitoring')
+        plt.draw()                               # draw the plot
 
         time.sleep(1)
 # Print a message to indicate that the CSV file has been written
