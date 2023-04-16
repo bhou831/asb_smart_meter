@@ -27,20 +27,34 @@ CurrentGainCT2 = 25498  # 25498 - SCT-013-000 100A/50mA
 # 46539 - Magnalab 100A w/ built in burden resistor
 
 
-# Create a live chart
-fig = make_subplots(rows=1, cols=1, specs=[[{'type': 'scatter'}]])
+# Create a live chart for the voltage, current, and power
+fig = make_subplots(rows=3, cols=1, specs=[[{'type': 'scatter'}],
+                                           [{'type': 'scatter'}],
+                                           [{'type': 'scatter'}]])
+
 trace_voltage = go.Scatter(x=[], y=[], mode='lines+markers', name='Voltage')
-fig.add_trace(trace_voltage)
+trace_currentA = go.Scatter(x=[], y=[], mode='lines+markers', name='CurrentA')
+trace_powerA = go.Scatter(x=[], y=[], mode='lines+markers', name='PowerA')
+
+fig.add_trace(trace_voltage, row=1, col=1)
+fig.add_trace(trace_currentA, row=2, col=1)
+fig.add_trace(trace_powerA, row=3, col=1)
 
 # Create global variables for x_data and y_data
-x_data = []
-y_data = []
+time_data = []
+y_data_voltage = []
+y_data_currentA = []
+y_data_powerA = []
 
 # Define an update function for the plot
 def update_plot():
-    global x_data, y_data
-    fig.data[0].x = x_data
-    fig.data[0].y = y_data
+    global x_data_voltage, y_data_voltage, y_data_currentA, y_data_powerA
+    fig.data[0].x = time_data
+    fig.data[0].y = y_data_voltage
+    fig.data[1].x = time_data
+    fig.data[1].y = y_data_currentA
+    fig.data[2].x = time_data
+    fig.data[2].y = y_data_powerA
 
 
 def read_data():
@@ -52,10 +66,15 @@ def read_data():
         energy_sensor = ATM90e32(spi_bus, cs, lineFreq, PGAGain,
                             VoltageGain, CurrentGainCT1, 0, CurrentGainCT2)# Collect data for 60 seconds# Open the CSV file for writing
         # Read the energy data from the sensor
-        voltageA = energy_sensor.line_voltageA
+        voltageA = energy_sensor.line_voltageA * 120 / 640
+        currentA = energy_sensor.line_currentA * 50
+        powerA = energy_sensor.line_active_powerA
         
-        x_data.append(time.time() - start_time) # append current time to list
-        y_data.append(voltageA * 120 / 640) # append current voltage to list
+        time_data.append(time.time() - start_time) # append current time to list
+        y_data_voltage.append(voltageA) # append current voltage to list
+        y_data_currentA.append(currentA) # append current currentA to list
+        y_data_powerA.append(powerA) # append current powerA to list
+
 
         time.sleep(1)
 
