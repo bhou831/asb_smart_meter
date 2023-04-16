@@ -21,7 +21,7 @@ CurrentGainCT2 = 25498  # 25498 - SCT-013-000 100A/50mA
 FILE_PATH = "energy_data_4.csv"
 
 with open(FILE_PATH, mode='w') as csv_file:
-    fieldnames = ['time', 'voltage1', 'voltage2', 'current1', 'current2', 'frequency', 'active_power']
+    fieldnames = ['time', 'voltage1', 'voltage2', 'current1', 'current2', 'frequency', 'active_power', 'totalvoltage']
     writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
     
     # Write the header row to the CSV file
@@ -44,12 +44,13 @@ with open(FILE_PATH, mode='w') as csv_file:
         
         # Write the energy data to the CSV file
         writer.writerow({'time': i, 
-                         'voltage1': voltageA, 
-                         'voltage2': voltageC, 
-                         'current1': energy_sensor.line_currentA, 
-                         'current2': energy_sensor.line_currentC, 
-                         'frequency': energy_sensor.frequency, 
-                         'active_power': energy_sensor.active_power})
+                         'voltage1': voltageA*120/640, 
+                         'voltage2': voltageC*120/640, 
+                         'current1': energy_sensor.line_currentA*0.5/0.1, 
+                         'current2': energy_sensor.line_currentC*0.5/0.1, 
+                         'frequency': energy_sensor.frequency*60/50, 
+                         'active_power': energy_sensor.active_power},
+                         'totalvoltage': totalVoltage)
 
         time.sleep(1)
 # Print a message to indicate that the CSV file has been written
