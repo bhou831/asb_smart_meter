@@ -18,12 +18,14 @@ CurrentGainCT1 = 38695  # 38695 - SCT-016 120A/40mA
 CurrentGainCT2 = 25498  # 25498 - SCT-013-000 100A/50mA
 # 46539 - Magnalab 100A w/ built in burden resistor
 
+FILE_PATH = "energy_data_4.csv"
+
 
 spi_bus = busio.SPI(board.SCK, MISO=board.MISO, MOSI=board.MOSI)
 cs = digitalio.DigitalInOut(board.D5)
 energy_sensor = ATM90e32(spi_bus, cs, lineFreq, PGAGain,
                          VoltageGain, CurrentGainCT1, 0, CurrentGainCT2)# Collect data for 60 seconds# Open the CSV file for writing
-with open('energy_data_3.csv', mode='w') as csv_file:
+with open(FILE_PATH, mode='w') as csv_file:
     fieldnames = ['time', 'voltage1', 'voltage2', 'current1', 'current2', 'frequency', 'active_power']
     writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
     
@@ -31,7 +33,7 @@ with open('energy_data_3.csv', mode='w') as csv_file:
     writer.writeheader()
 
     # Loop for 60 seconds
-    for i in range(60):
+    for i in range(20):
         # Read the energy data from the sensor
         sys0 = energy_sensor.sys_status0
         voltageA = energy_sensor.line_voltageA
@@ -52,4 +54,4 @@ with open('energy_data_3.csv', mode='w') as csv_file:
 
         time.sleep(1)
 # Print a message to indicate that the CSV file has been written
-print("Energy data saved to 'energy_data.csv'")
+print(f"Energy data saved to {FILE_PATH}")
