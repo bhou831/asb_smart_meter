@@ -46,8 +46,8 @@ with open(FILE_PATH, mode='w') as csv_file:
         writer.writerow({'time': i, 
                          'voltage1': voltageA*120/640, 
                          'voltage2': voltageC*120/640, 
-                         'current1': energy_sensor.line_currentA*1/0.1, 
-                         'current2': energy_sensor.line_currentC*1/0.1, 
+                         'current1': energy_sensor.line_currentA*5/0.1, 
+                         'current2': energy_sensor.line_currentC*5/0.1, 
                          'frequency': energy_sensor.frequency*60/50, 
                          'active_power': energy_sensor.active_power})
 
