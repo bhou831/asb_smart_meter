@@ -49,8 +49,8 @@ with open(FILE_PATH, mode='w') as csv_file:
                          'current1': energy_sensor.line_currentA*0.5/0.1, 
                          'current2': energy_sensor.line_currentC*0.5/0.1, 
                          'frequency': energy_sensor.frequency*60/50, 
-                         'active_power': energy_sensor.active_power},
-                         'totalvoltage': totalVoltage)
+                         'active_power': energy_sensor.active_power,
+                         'totalvoltage': totalVoltage})
 
         time.sleep(1)
 # Print a message to indicate that the CSV file has been written
