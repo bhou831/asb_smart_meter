@@ -26,6 +26,8 @@ CurrentGainCT1 = 38695  # 38695 - SCT-016 120A/40mA
 CurrentGainCT2 = 25498  # 25498 - SCT-013-000 100A/50mA
 # 46539 - Magnalab 100A w/ built in burden resistor
 
+OBSERVATION_TIME = 300 # 5 minutes observation time
+
 
 # Create a live chart for the voltage, current, and power
 fig = make_subplots(rows=3, cols=1, specs=[[{'type': 'scatter'}],
@@ -64,7 +66,7 @@ def update_plot():
 def read_data():
     global x_data, y_data
     start_time = time.time()
-    for i in range(60):
+    for i in range(OBSERVATION_TIME):
         spi_bus = busio.SPI(board.SCK, MISO=board.MISO, MOSI=board.MOSI)
         cs = digitalio.DigitalInOut(board.D5)
         energy_sensor = ATM90e32(spi_bus, cs, lineFreq, PGAGain,
