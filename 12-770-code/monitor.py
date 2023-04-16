@@ -44,7 +44,7 @@ fig.add_trace(trace_currentA, row=2, col=1)
 fig.add_trace(trace_powerA, row=3, col=1)
 
 #increase the height
-fig.update_layout(height=900)
+fig.update_layout(height=1200)
 
 # Create global variables for x_data and y_data
 time_data = []
