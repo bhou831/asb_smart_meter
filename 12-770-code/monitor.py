@@ -2,7 +2,6 @@ import digitalio
 import board
 import busio
 import time
-import csv
 from atm90e32 import ATM90e32
 from adafruit_bus_device.spi_device import SPIDevice
 import plotly.graph_objs as go
