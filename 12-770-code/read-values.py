@@ -62,6 +62,7 @@ with open(FILE_PATH, mode='w') as csv_file:
         plt.ylabel('Voltage (V)')
         plt.title('Live Voltage Monitoring')
         plt.draw()                               # draw the plot
+        plt.show()
 
         time.sleep(1)
 # Print a message to indicate that the CSV file has been written
