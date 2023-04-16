@@ -20,11 +20,6 @@ CurrentGainCT2 = 25498  # 25498 - SCT-013-000 100A/50mA
 
 FILE_PATH = "energy_data_4.csv"
 
-
-spi_bus = busio.SPI(board.SCK, MISO=board.MISO, MOSI=board.MOSI)
-cs = digitalio.DigitalInOut(board.D5)
-energy_sensor = ATM90e32(spi_bus, cs, lineFreq, PGAGain,
-                         VoltageGain, CurrentGainCT1, 0, CurrentGainCT2)# Collect data for 60 seconds# Open the CSV file for writing
 with open(FILE_PATH, mode='w') as csv_file:
     fieldnames = ['time', 'voltage1', 'voltage2', 'current1', 'current2', 'frequency', 'active_power']
     writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
@@ -34,6 +29,10 @@ with open(FILE_PATH, mode='w') as csv_file:
 
     # Loop for 60 seconds
     for i in range(20):
+        spi_bus = busio.SPI(board.SCK, MISO=board.MISO, MOSI=board.MOSI)
+        cs = digitalio.DigitalInOut(board.D5)
+        energy_sensor = ATM90e32(spi_bus, cs, lineFreq, PGAGain,
+                         VoltageGain, CurrentGainCT1, 0, CurrentGainCT2)# Collect data for 60 seconds# Open the CSV file for writing
         # Read the energy data from the sensor
         sys0 = energy_sensor.sys_status0
         voltageA = energy_sensor.line_voltageA
