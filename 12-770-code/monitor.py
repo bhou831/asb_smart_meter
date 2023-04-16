@@ -68,7 +68,7 @@ def read_data():
         # Read the energy data from the sensor
         voltageA = energy_sensor.line_voltageA * 120 / 640
         currentA = energy_sensor.line_currentA * 50
-        powerA = energy_sensor.line_active_powerA
+        powerA = energy_sensor.active_power
         
         time_data.append(time.time() - start_time) # append current time to list
         y_data_voltage.append(voltageA) # append current voltage to list
