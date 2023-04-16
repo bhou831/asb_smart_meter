@@ -44,11 +44,11 @@ with open(FILE_PATH, mode='w') as csv_file:
         
         # Write the energy data to the CSV file
         writer.writerow({'time': i, 
-                         'voltage1': voltageA*120/320, 
-                         'voltage2': voltageC*120/320, 
-                         'current1': energy_sensor.line_currentA*0.5/0.1, 
-                         'current2': energy_sensor.line_currentC*0.5/0.1, 
-                         'frequency': energy_sensor.frequency*60/50, 
+                         'voltage1': voltageA, 
+                         'voltage2': voltageC, 
+                         'current1': energy_sensor.line_currentA, 
+                         'current2': energy_sensor.line_currentC, 
+                         'frequency': energy_sensor.frequency, 
                          'active_power': energy_sensor.active_power})
 
         time.sleep(1)
