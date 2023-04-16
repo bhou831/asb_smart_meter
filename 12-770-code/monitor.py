@@ -27,21 +27,44 @@ CurrentGainCT2 = 25498  # 25498 - SCT-013-000 100A/50mA
 # 46539 - Magnalab 100A w/ built in burden resistor
 
 OBSERVATION_TIME = 300 # 5 minutes observation time
+MEASUREMENT_GRANULARITY = 1 # 1 second measurement granularity
+PORT = 8080 # port for the web server, default is 8080
 
-
+# ***** DASH APP *****/
 # Create a live chart for the voltage, current, and power
-fig = make_subplots(rows=3, cols=1, specs=[[{'type': 'scatter'}],
-                                           [{'type': 'scatter'}],
-                                           [{'type': 'scatter'}]],
-                                           row_heights=[0.33, 0.33, 0.33])
+fig = make_subplots(rows=3,
+                    cols=1,
+                    specs=[[{'type': 'scatter'}],
+                           [{'type': 'scatter'}],
+                           [{'type': 'scatter'}]],
+                    row_heights=[0.33, 0.33, 0.33])
 
-trace_voltage = go.Scatter(x=[], y=[], mode='lines+markers', name='Voltage')
-trace_currentA = go.Scatter(x=[], y=[], mode='lines+markers', name='CurrentA')
-trace_powerA = go.Scatter(x=[], y=[], mode='lines+markers', name='PowerA')
+trace_voltage = go.Scatter(x=[],
+                           y=[],
+                           mode='lines+markers',
+                           name='Voltage')
 
-fig.add_trace(trace_voltage, row=1, col=1)
-fig.add_trace(trace_currentA, row=2, col=1)
-fig.add_trace(trace_powerA, row=3, col=1)
+trace_currentA = go.Scatter(x=[],
+                            y=[],
+                            mode='lines+markers',
+                            name='Current')
+
+trace_powerA = go.Scatter(x=[],
+                          y=[],
+                          mode='lines+markers',
+                          name='Active Power')
+
+fig.add_trace(trace_voltage,
+              row=1,
+              col=1)
+
+fig.add_trace(trace_currentA,
+              row=2,
+              col=1)
+
+fig.add_trace(trace_powerA,
+              row=3,
+              col=1)
 
 #increase the height
 fig.update_layout(height=1080)
@@ -62,40 +85,58 @@ def update_plot():
     fig.data[2].x = time_data
     fig.data[2].y = y_data_powerA
 
-
+# Read data from the sensor during OBSERVATION_TIME
 def read_data():
     global x_data, y_data
     start_time = time.time()
     for i in range(OBSERVATION_TIME):
-        spi_bus = busio.SPI(board.SCK, MISO=board.MISO, MOSI=board.MOSI)
+        # Create the energy sensor object and initialize it
+        spi_bus = busio.SPI(board.SCK,
+                            MISO=board.MISO,
+                            MOSI=board.MOSI)
+        
         cs = digitalio.DigitalInOut(board.D5)
-        energy_sensor = ATM90e32(spi_bus, cs, lineFreq, PGAGain,
-                            VoltageGain, CurrentGainCT1, 0, CurrentGainCT2)# Collect data for 60 seconds# Open the CSV file for writing
-        # Read the energy data from the sensor
+
+        energy_sensor = ATM90e32(spi_bus,
+                                 cs,
+                                 lineFreq,
+                                 PGAGain,
+                                 VoltageGain,
+                                 CurrentGainCT1,
+                                 0,
+                                 CurrentGainCT2)
+        
+        # Read the energy data from the sensor, apply calibration, and append to list
         voltageA = energy_sensor.line_voltageA * 120 / 640
         currentA = energy_sensor.line_currentA * 50
         powerA = energy_sensor.active_power
         
-        time_data.append(time.time() - start_time) # append current time to list
-        y_data_voltage.append(voltageA) # append current voltage to list
-        y_data_currentA.append(currentA) # append current currentA to list
-        y_data_powerA.append(powerA) # append current powerA to list
+        time_data.append(time.time() - start_time)
+        y_data_voltage.append(voltageA)
+        y_data_currentA.append(currentA)
+        y_data_powerA.append(powerA)
 
-
-        time.sleep(1)
+        # Wait for 1 second
+        time.sleep(MEASUREMENT_GRANULARITY)
 
 # Create the Dash app
 app = dash.Dash(__name__)
 
-# Define the layout
+# Define the hteml layout
 app.layout = html.Div([
-    dcc.Graph(id='live-plot', figure=fig),
-    dcc.Interval(id='interval-component', interval=1000, n_intervals=0) # Update every second
+    dcc.Graph(id='live-plot',
+              figure=fig),
+    
+    dcc.Interval(id='interval-component',
+                 interval=1000,
+                 n_intervals=0) # Update every second
 ])
 
 # Define the callback to update the plot
 @app.callback(Output('live-plot', 'figure'),
               [Input('interval-component', 'n_intervals')])
+
+# Define the update function
 def update_live_plot(n):
     update_plot()
     return fig
@@ -105,4 +146,4 @@ data_thread = threading.Thread(target=read_data)
 data_thread.start()
 
 # Run the Dash app
-app.run_server(port=8080)
+app.run_server(port=PORT)
