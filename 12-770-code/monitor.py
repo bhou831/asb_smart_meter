@@ -45,6 +45,7 @@ def update_plot():
 
 def read_data():
     global x_data, y_data
+    start_time = time.time()
     for i in range(60):
         spi_bus = busio.SPI(board.SCK, MISO=board.MISO, MOSI=board.MOSI)
         cs = digitalio.DigitalInOut(board.D5)
