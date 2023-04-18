@@ -107,8 +107,8 @@ def read_data():
         
         # Read the energy data from the sensor, apply calibration, and append to list
         voltageA = energy_sensor.line_voltageA * 120 / 640
-        currentA = energy_sensor.line_currentA * 50
-        powerA = energy_sensor.active_power
+        currentA = energy_sensor.line_currentA * 5
+        powerA = voltageA * currentA
         
         time_data.append(time.time() - start_time)
         y_data_voltage.append(voltageA)
