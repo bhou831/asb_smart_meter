@@ -42,8 +42,8 @@ print('Active Power: {}W'.format(energy_sensor.active_power))
 ############################################################
 # Print out voltage, current, and frequency readings.
 ############################################################
-print('Voltage 1: {}V'.format(voltageA))
-print('Voltage 2: {}V'.format(voltageC))
+print('Voltage 1: {}V'.format(energy_sensor.voltageA))
+print('Voltage 2: {}V'.format(energy_sensor.voltageC))
 print('Current 1: {}A'.format(energy_sensor.line_currentA))
 print('Current 2: {}A'.format(energy_sensor.line_currentC))
 print('Frequency: {}Hz'.format(energy_sensor.frequency))
