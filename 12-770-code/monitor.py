@@ -26,7 +26,7 @@ CurrentGainCT2 = 25498  # 25498 - SCT-013-000 100A/50mA
 # 46539 - Magnalab 100A w/ built in burden resistor
 
 OBSERVATION_TIME = 300 # 5 minutes observation time
-MEASUREMENT_GRANULARITY = 1 # 1 second measurement granularity
+MEASUREMENT_GRANULARITY = 2 # 1 second measurement granularity
 PORT = 8080 # port for the web server, default is 8080
 
 # ***** DASH APP *****/
@@ -107,7 +107,7 @@ def read_data():
         
         # Read the energy data from the sensor, apply calibration, and append to list
         voltageA = energy_sensor.line_voltageA * 120 / 640
-        currentA = energy_sensor.line_currentA * 5
+        currentA = energy_sensor.line_currentA
         powerA = voltageA * currentA
         
         time_data.append(time.time() - start_time)
