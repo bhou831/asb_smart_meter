@@ -25,7 +25,7 @@ TIME_THRESHOLD = 60
 FILE_PATH = "energy_data_4.csv"
 
 with open(FILE_PATH, mode='w') as csv_file:
-    fieldnames = ['time', 'voltage1', 'voltage2', 'current1', 'current2', 'frequency', 'active_power']
+    fieldnames = ['time', 'voltage', 'current', 'frequency', 'power']
     writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
     
     # Write the header row to the CSV file
@@ -48,12 +48,10 @@ with open(FILE_PATH, mode='w') as csv_file:
         
         # Write the energy data to the CSV file
         writer.writerow({'time': i, 
-                         'voltage1': voltageA*120/640, 
-                         'voltage2': voltageC*120/640, 
-                         'current1': energy_sensor.line_currentA, 
-                         'current2': energy_sensor.line_currentC, 
+                         'voltage': voltageA*120/640, 
+                         'current': energy_sensor.line_currentA, 
                          'frequency': energy_sensor.frequency*60/50, 
-                         'active_power': voltageA*120/640*energy_sensor.line_currentA})
+                         'power': voltageA*120/640*energy_sensor.line_currentA})
 
         time.sleep(1)
 # Print a message to indicate that the CSV file has been written
