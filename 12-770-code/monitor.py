@@ -26,7 +26,7 @@ CurrentGainCT2 = 25498  # 25498 - SCT-013-000 100A/50mA
 # 46539 - Magnalab 100A w/ built in burden resistor
 
 OBSERVATION_TIME = 600 # 10 minutes observation time
-MEASUREMENT_GRANULARITY = 0.5 # 1 second measurement granularity
+MEASUREMENT_GRANULARITY = 4 # 1 second measurement granularity
 PORT = 8080 # port for the web server, default is 8080
 
 # ***** DASH APP *****/
