@@ -71,22 +71,21 @@ fig.update_layout(height=1080)
 # Create global variables for x_data and y_data
 time_data = []
 y_data_voltage = []
-y_data_currentA = []
-y_data_powerA = []
+y_data_current = []
+y_data_power = []
 
 # Define an update function for the plot
 def update_plot():
-    global x_data_voltage, y_data_voltage, y_data_currentA, y_data_powerA
+    global time_data, y_data_voltage, y_data_current, y_data_power
     fig.data[0].x = time_data
     fig.data[0].y = y_data_voltage
     fig.data[1].x = time_data
-    fig.data[1].y = y_data_currentA
+    fig.data[1].y = y_data_current
     fig.data[2].x = time_data
-    fig.data[2].y = y_data_powerA
+    fig.data[2].y = y_data_power
 
 # Read data from the sensor during OBSERVATION_TIME
 def read_data():
-    global x_data, y_data
     start_time = time.time()
     for i in range(OBSERVATION_TIME):
         # Create the energy sensor object and initialize it
@@ -108,12 +107,12 @@ def read_data():
         # Read the energy data from the sensor, apply calibration, and append to list
         voltage = (energy_sensor.line_voltageA * 120 / 640 + energy_sensor.line_voltageC * 120 / 640) / 2
         current = energy_sensor.line_currentA
-        powerA = voltage * current
+        power = voltage * current
         
         time_data.append(time.time() - start_time)
         y_data_voltage.append(voltage)
-        y_data_currentA.append(current)
-        y_data_powerA.append(powerA)
+        y_data_current.append(current)
+        y_data_power.append(power)
 
         # Wait for 1 second
         time.sleep(MEASUREMENT_GRANULARITY)
