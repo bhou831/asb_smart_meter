@@ -19,6 +19,9 @@ CurrentGainCT1 = 38695  # 38695 - SCT-016 120A/40mA
 CurrentGainCT2 = 25498  # 25498 - SCT-013-000 100A/50mA
 # 46539 - Magnalab 100A w/ built in burden resistor
 
+# adjust the time threshold to collect data
+TIME_THRESHOLD = 60
+
 FILE_PATH = "energy_data_4.csv"
 
 with open(FILE_PATH, mode='w') as csv_file:
@@ -29,7 +32,7 @@ with open(FILE_PATH, mode='w') as csv_file:
     writer.writeheader()
 
     # Loop for 60 seconds
-    for i in range(60):
+    for i in range(TIME_THRESHOLD):
         spi_bus = busio.SPI(board.SCK, MISO=board.MISO, MOSI=board.MOSI)
         cs = digitalio.DigitalInOut(board.D5)
         energy_sensor = ATM90e32(spi_bus, cs, lineFreq, PGAGain,
@@ -47,10 +50,10 @@ with open(FILE_PATH, mode='w') as csv_file:
         writer.writerow({'time': i, 
                          'voltage1': voltageA*120/640, 
                          'voltage2': voltageC*120/640, 
-                         'current1': energy_sensor.line_currentA*5/0.1, 
-                         'current2': energy_sensor.line_currentC*5/0.1, 
+                         'current1': energy_sensor.line_currentA, 
+                         'current2': energy_sensor.line_currentC, 
                          'frequency': energy_sensor.frequency*60/50, 
-                         'active_power': energy_sensor.active_power})
+                         'active_power': voltageA*120/640*energy_sensor.line_currentA})
 
         time.sleep(1)
 # Print a message to indicate that the CSV file has been written
