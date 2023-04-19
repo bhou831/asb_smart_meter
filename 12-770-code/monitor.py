@@ -86,6 +86,7 @@ def update_plot():
 
 # Read data from the sensor during OBSERVATION_TIME
 def read_data():
+    global time_data, y_data_voltage, y_data_current, y_data_power
     start_time = time.time()
     for i in range(OBSERVATION_TIME):
         # Create the energy sensor object and initialize it
