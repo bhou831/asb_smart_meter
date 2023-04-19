@@ -93,7 +93,7 @@ def read_data():
         spi_bus = busio.SPI(board.SCK,
                             MISO=board.MISO,
                             MOSI=board.MOSI)
-        
+
         cs = digitalio.DigitalInOut(board.D5)
 
         energy_sensor = ATM90e32(spi_bus,
@@ -104,7 +104,7 @@ def read_data():
                                  CurrentGainCT1,
                                  0,
                                  CurrentGainCT2)
-        
+
         # Read the energy data from the sensor, apply calibration, and append to list
         voltage = (energy_sensor.line_voltageA * 120 / 640 + energy_sensor.line_voltageC * 120 / 640) / 2
         current = energy_sensor.line_currentA
@@ -125,7 +125,7 @@ app = dash.Dash(__name__)
 app.layout = html.Div([
     dcc.Graph(id='live-plot',
               figure=fig),
-    
+
     dcc.Interval(id='interval-component',
                  interval=1000,
                  n_intervals=0) # Update every second
