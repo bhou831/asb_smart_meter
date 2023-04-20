@@ -116,8 +116,8 @@ def read_data():
         y_data_current.append(current)
         y_data_power.append(power)
 
-        if current > 3:
-            send_msg()
+        # if current > 3:
+        #     send_msg()
 
         # Wait for 1 second
         time.sleep(MEASUREMENT_GRANULARITY)
