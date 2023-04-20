@@ -12,6 +12,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
 import threading
+from msg import send_msg
 
 # ***** CALIBRATION SETTINGS *****/
 lineFreq = 4485  # 4485 for 60 Hz (North America)
@@ -114,6 +115,9 @@ def read_data():
         y_data_voltage.append(voltage)
         y_data_current.append(current)
         y_data_power.append(power)
+
+        if current > 3:
+            send_msg()
 
         # Wait for 1 second
         time.sleep(MEASUREMENT_GRANULARITY)
