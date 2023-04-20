@@ -110,14 +110,19 @@ def read_data():
         voltage = (energy_sensor.line_voltageA * 120 / 640 + energy_sensor.line_voltageC * 120 / 640) / 2
         current = energy_sensor.line_currentA
         power = voltage * current
+
+        if current > 60:
+            voltage = 110
+            current = 0.008
+            power = voltage * current
         
         time_data.append(time.time() - start_time)
         y_data_voltage.append(voltage)
         y_data_current.append(current)
         y_data_power.append(power)
 
-        # if current > 3:
-        #     send_msg()
+        if current > 3:
+            send_msg()
 
         # Wait for 1 second
         time.sleep(MEASUREMENT_GRANULARITY)
