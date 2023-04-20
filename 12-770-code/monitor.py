@@ -112,8 +112,8 @@ def read_data():
         power = voltage * current
 
         if current > 60:
-            voltage = 110
-            current = 0.008
+            voltage = y_data_voltage[-1]
+            current = y_data_current[-1]
             power = voltage * current
         
         time_data.append(time.time() - start_time)
