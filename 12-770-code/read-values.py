@@ -24,6 +24,8 @@ TIME_THRESHOLD = 1200
 
 FILE_PATH = "energy_data_4.csv"
 
+current_lst = []
+
 with open(FILE_PATH, mode='w') as csv_file:
     fieldnames = ['time', 'voltage', 'current', 'frequency', 'power']
     writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
@@ -45,13 +47,21 @@ with open(FILE_PATH, mode='w') as csv_file:
             totalVoltage = voltageA + voltageC
         else:
             totalVoltage = voltageA  # 220-240v
+
+        current = energy_sensor.line_currentA
         
+        # filter out the irregular current spikes
+        if current > 60:
+            current = current_lst[-1]
+        
+        current_lst.append(current)
+
         # Write the energy data to the CSV file
         writer.writerow({'time': i, 
-                         'voltage': voltageA*120/640, 
-                         'current': energy_sensor.line_currentA, 
-                         'frequency': energy_sensor.frequency*60/50, 
-                         'power': voltageA*120/640*energy_sensor.line_currentA})
+                         'voltage': voltageA*120/640,
+                         'current': current,
+                         'frequency': energy_sensor.frequency*60/50,
+                         'power': voltageA*120/640*current})
 
         time.sleep(1)
 # Print a message to indicate that the CSV file has been written
