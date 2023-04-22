@@ -20,9 +20,10 @@ CurrentGainCT2 = 25498  # 25498 - SCT-013-000 100A/50mA
 # 46539 - Magnalab 100A w/ built in burden resistor
 
 # adjust the time threshold to collect data
-TIME_THRESHOLD = 1200
+TIME_THRESHOLD = 6400
+MEASUREMENT_GRANULARITY = 3 # 3 second measurement granularity
 
-FILE_PATH = "energy_data_4.csv"
+FILE_PATH = "energy_data_2_hour.csv"
 
 current_lst = []
 
@@ -63,6 +64,6 @@ with open(FILE_PATH, mode='w') as csv_file:
                          'frequency': energy_sensor.frequency*60/50,
                          'power': voltageA*120/640*current})
 
-        time.sleep(1)
+        time.sleep(MEASUREMENT_GRANULARITY)
 # Print a message to indicate that the CSV file has been written
 print(f"Energy data saved to {FILE_PATH}")

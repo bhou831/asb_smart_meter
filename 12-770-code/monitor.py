@@ -26,8 +26,8 @@ CurrentGainCT1 = 38695  # 38695 - SCT-016 120A/40mA
 CurrentGainCT2 = 25498  # 25498 - SCT-013-000 100A/50mA
 # 46539 - Magnalab 100A w/ built in burden resistor
 
-OBSERVATION_TIME = 600 # 10 minutes observation time
-MEASUREMENT_GRANULARITY = 3 # 1 second measurement granularity
+OBSERVATION_TIME = 7200 # 120 minutes observation time
+MEASUREMENT_GRANULARITY = 3 # 3 second measurement granularity
 PORT = 8080 # port for the web server, default is 8080
 
 # ***** DASH APP *****/
@@ -121,8 +121,8 @@ def read_data():
         y_data_current.append(current)
         y_data_power.append(power)
 
-        if current > 3:
-            send_msg()
+        # if current > 3:
+        #     send_msg()
 
         # Wait for 1 second
         time.sleep(MEASUREMENT_GRANULARITY)
