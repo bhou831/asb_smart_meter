@@ -111,7 +111,7 @@ def read_data():
         current = energy_sensor.line_currentA
         power = voltage * current
 
-        if current > 60:
+        if current > 10:
             voltage = y_data_voltage[-1]
             current = y_data_current[-1]
             power = voltage * current
