@@ -52,7 +52,7 @@ with open(FILE_PATH, mode='w') as csv_file:
         current = energy_sensor.line_currentA
         
         # filter out the irregular current spikes
-        if current > 10:
+        if current > 3:
             current = current_lst[-1]
         
         current_lst.append(current)
