@@ -125,8 +125,7 @@ def read_data():
         # if current > 3:
         #     send_msg()
 
-        # Wait for 1 second
-        deinit_resources(spi_bus, cs)
+        # Wait for 3 second
         del energy_sensor
         gc.collect()
         time.sleep(MEASUREMENT_GRANULARITY)
