@@ -125,7 +125,7 @@ def read_data():
         #     send_msg()
 
         # Wait for 1 second
-        energy_sensor.close()
+        del energy_sensor
         time.sleep(MEASUREMENT_GRANULARITY)
 
 # Create the Dash app

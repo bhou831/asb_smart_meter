@@ -64,7 +64,7 @@ with open(FILE_PATH, mode='w') as csv_file:
                          'frequency': energy_sensor.frequency*60/50,
                          'power': voltageA*120/640*current})
         
-        energy_sensor.close()
+        del energy_sensor
         time.sleep(MEASUREMENT_GRANULARITY)
 # Print a message to indicate that the CSV file has been written
 print(f"Energy data saved to {FILE_PATH}")
