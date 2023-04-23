@@ -6,6 +6,7 @@ import csv
 from atm90e32 import ATM90e32
 from adafruit_bus_device.spi_device import SPIDevice
 import matplotlib.pyplot as plt
+import gc
 
 # ***** CALIBRATION SETTINGS *****/
 lineFreq = 4485  # 4485 for 60 Hz (North America)
@@ -33,8 +34,7 @@ def init_energy_sensor():
     energy_sensor = ATM90e32(spi_bus, cs, lineFreq, PGAGain, VoltageGain, CurrentGainCT1, 0, CurrentGainCT2)
     return spi_bus, cs, energy_sensor
 
-def deinit_resources(spi_bus, cs, energy_sensor):
-    energy_sensor.deinit()
+def deinit_resources(spi_bus, cs):
     cs.deinit()
     spi_bus.deinit()
 
@@ -73,7 +73,9 @@ with open(FILE_PATH, mode='w') as csv_file:
                          'frequency': energy_sensor.frequency*60/50,
                          'power': voltageA*120/640*current})
         
-        deinit_resources(spi_bus, cs, energy_sensor)
+        deinit_resources(spi_bus, cs)
+        del energy_sensor
+        gc.collect()
         time.sleep(MEASUREMENT_GRANULARITY)
 # Print a message to indicate that the CSV file has been written
 print(f"Energy data saved to {FILE_PATH}")

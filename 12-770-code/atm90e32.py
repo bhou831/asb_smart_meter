@@ -25,9 +25,6 @@ class ATM90e32:
 
         self._init_config()
 
-    def deinit(self):
-        self._device.deinit()
-
     def _init_config(self):
         # CurrentGainCT2 = 25498  #25498 - SCT-013-000 100A/50mA
         if (self._linefreq == 4485 or self._linefreq == 5231):

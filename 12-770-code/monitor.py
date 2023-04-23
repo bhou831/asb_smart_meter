@@ -13,6 +13,7 @@ import dash_html_components as html
 from dash.dependencies import Input, Output
 import threading
 from msg import send_msg
+import gc
 
 # ***** CALIBRATION SETTINGS *****/
 lineFreq = 4485  # 4485 for 60 Hz (North America)
@@ -83,8 +84,7 @@ def init_energy_sensor():
     return spi_bus, cs, energy_sensor
 
 # deinitialize the energy sensor
-def deinit_resources(spi_bus, cs, energy_sensor):
-    energy_sensor.deinit()
+def deinit_resources(spi_bus, cs):
     cs.deinit()
     spi_bus.deinit()
 
@@ -126,7 +126,9 @@ def read_data():
         #     send_msg()
 
         # Wait for 1 second
-        deinit_resources(spi_bus, cs, energy_sensor)
+        deinit_resources(spi_bus, cs)
+        del energy_sensor
+        gc.collect()
         time.sleep(MEASUREMENT_GRANULARITY)
 
 # Create the Dash app
