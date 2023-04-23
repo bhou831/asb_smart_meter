@@ -24,7 +24,7 @@ CurrentGainCT2 = 25498  # 25498 - SCT-013-000 100A/50mA
 TIME_THRESHOLD = 28800
 MEASUREMENT_GRANULARITY = 3 # 3 second measurement granularity
 
-FILE_PATH = "energy_data_2_hour.csv"
+FILE_PATH = "energy_data_1_hour.csv"
 
 current_lst = []
 
