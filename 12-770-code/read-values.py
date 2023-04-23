@@ -27,6 +27,16 @@ FILE_PATH = "energy_data_2_hour.csv"
 
 current_lst = []
 
+def init_energy_sensor():
+    spi_bus = busio.SPI(board.SCK, MISO=board.MISO, MOSI=board.MOSI)
+    cs = digitalio.DigitalInOut(board.D5)
+    energy_sensor = ATM90e32(spi_bus, cs, lineFreq, PGAGain, VoltageGain, CurrentGainCT1, 0, CurrentGainCT2)
+    return spi_bus, cs, energy_sensor
+
+def deinit_resources(spi_bus, cs):
+    cs.deinit()
+    spi_bus.deinit()
+
 with open(FILE_PATH, mode='w') as csv_file:
     fieldnames = ['time', 'voltage', 'current', 'frequency', 'power']
     writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
@@ -36,10 +46,8 @@ with open(FILE_PATH, mode='w') as csv_file:
 
     # Loop for 60 seconds
     for i in range(TIME_THRESHOLD):
-        spi_bus = busio.SPI(board.SCK, MISO=board.MISO, MOSI=board.MOSI)
-        cs = digitalio.DigitalInOut(board.D5)
-        energy_sensor = ATM90e32(spi_bus, cs, lineFreq, PGAGain,
-                         VoltageGain, CurrentGainCT1, 0, CurrentGainCT2)# Collect data for 60 seconds# Open the CSV file for writing
+        spi_bus, cs, energy_sensor = init_energy_sensor()
+
         # Read the energy data from the sensor
         sys0 = energy_sensor.sys_status0
         voltageA = energy_sensor.line_voltageA
@@ -64,7 +72,7 @@ with open(FILE_PATH, mode='w') as csv_file:
                          'frequency': energy_sensor.frequency*60/50,
                          'power': voltageA*120/640*current})
         
-        del energy_sensor
+        deinit_resources(spi_bus, cs)
         time.sleep(MEASUREMENT_GRANULARITY)
 # Print a message to indicate that the CSV file has been written
 print(f"Energy data saved to {FILE_PATH}")
