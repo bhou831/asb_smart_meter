@@ -83,7 +83,8 @@ def init_energy_sensor():
     return spi_bus, cs, energy_sensor
 
 # deinitialize the energy sensor
-def deinit_resources(spi_bus, cs):
+def deinit_resources(spi_bus, cs, energy_sensor):
+    energy_sensor.deinit()
     cs.deinit()
     spi_bus.deinit()
 
@@ -125,7 +126,7 @@ def read_data():
         #     send_msg()
 
         # Wait for 1 second
-        deinit_resources(spi_bus, cs)
+        deinit_resources(spi_bus, cs, energy_sensor)
         time.sleep(MEASUREMENT_GRANULARITY)
 
 # Create the Dash app

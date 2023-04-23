@@ -33,7 +33,8 @@ def init_energy_sensor():
     energy_sensor = ATM90e32(spi_bus, cs, lineFreq, PGAGain, VoltageGain, CurrentGainCT1, 0, CurrentGainCT2)
     return spi_bus, cs, energy_sensor
 
-def deinit_resources(spi_bus, cs):
+def deinit_resources(spi_bus, cs, energy_sensor):
+    energy_sensor.deinit()
     cs.deinit()
     spi_bus.deinit()
 
@@ -72,7 +73,7 @@ with open(FILE_PATH, mode='w') as csv_file:
                          'frequency': energy_sensor.frequency*60/50,
                          'power': voltageA*120/640*current})
         
-        deinit_resources(spi_bus, cs)
+        deinit_resources(spi_bus, cs, energy_sensor)
         time.sleep(MEASUREMENT_GRANULARITY)
 # Print a message to indicate that the CSV file has been written
 print(f"Energy data saved to {FILE_PATH}")
