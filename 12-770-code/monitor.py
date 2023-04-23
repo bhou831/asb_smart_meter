@@ -89,24 +89,23 @@ def update_plot():
 def read_data():
     global time_data, y_data_voltage, y_data_current, y_data_power
     start_time = time.time()
-
-    # Create the energy sensor object and initialize it
-    spi_bus = busio.SPI(board.SCK,
-                        MISO=board.MISO,
-                        MOSI=board.MOSI)
-
-    cs = digitalio.DigitalInOut(board.D5)
-
-    energy_sensor = ATM90e32(spi_bus,
-                                cs,
-                                lineFreq,
-                                PGAGain,
-                                VoltageGain,
-                                CurrentGainCT1,
-                                0,
-                                CurrentGainCT2)
-
     for i in range(OBSERVATION_TIME):
+        # Create the energy sensor object and initialize it
+        spi_bus = busio.SPI(board.SCK,
+                            MISO=board.MISO,
+                            MOSI=board.MOSI)
+
+        cs = digitalio.DigitalInOut(board.D5)
+
+        energy_sensor = ATM90e32(spi_bus,
+                                 cs,
+                                 lineFreq,
+                                 PGAGain,
+                                 VoltageGain,
+                                 CurrentGainCT1,
+                                 0,
+                                 CurrentGainCT2)
+
         # Read the energy data from the sensor, apply calibration, and append to list
         voltage = (energy_sensor.line_voltageA * 120 / 640 + energy_sensor.line_voltageC * 120 / 640) / 2
         current = energy_sensor.line_currentA
@@ -126,6 +125,7 @@ def read_data():
         #     send_msg()
 
         # Wait for 1 second
+        energy_sensor.close()
         time.sleep(MEASUREMENT_GRANULARITY)
 
 # Create the Dash app

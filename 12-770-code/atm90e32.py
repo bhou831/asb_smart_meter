@@ -242,3 +242,6 @@ class ATM90e32:
         # flip the bits...different than Arduino...
         val = val ^ 0xffffffff
         return (val)
+    ###################################################################################
+    def close(self):
+       self._device.deinit()
