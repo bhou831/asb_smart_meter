@@ -7,6 +7,10 @@ from atm90e32 import ATM90e32
 from adafruit_bus_device.spi_device import SPIDevice
 import matplotlib.pyplot as plt
 import gc
+import datetime
+
+# Generate a timestamp string
+timestamp = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
 
 # ***** CALIBRATION SETTINGS *****/
 lineFreq = 4485  # 4485 for 60 Hz (North America)
@@ -21,10 +25,10 @@ CurrentGainCT2 = 25498  # 25498 - SCT-013-000 100A/50mA
 # 46539 - Magnalab 100A w/ built in burden resistor
 
 # adjust the time threshold to collect data
-TIME_THRESHOLD = 7200 # 120 minutes observation time
+TIME_THRESHOLD = 720 # 120 minutes observation time
 MEASUREMENT_GRANULARITY = 3 # 3 second measurement granularity
 
-FILE_PATH = f"energy_data_{TIME_THRESHOLD}_seconds.csv"
+FILE_PATH = f"energy_data_{TIME_THRESHOLD}_seconds_{timestamp}.csv"
 
 current_lst = []
 
