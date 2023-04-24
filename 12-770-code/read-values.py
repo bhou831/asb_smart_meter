@@ -25,7 +25,7 @@ CurrentGainCT2 = 25498  # 25498 - SCT-013-000 100A/50mA
 # 46539 - Magnalab 100A w/ built in burden resistor
 
 # adjust the time threshold to collect data
-TIME_THRESHOLD = 720 # 120 minutes observation time
+TIME_THRESHOLD = 1200 # 120 minutes observation time
 MEASUREMENT_GRANULARITY = 3 # 3 second measurement granularity
 
 FILE_PATH = f"energy_data_{TIME_THRESHOLD}_seconds_{timestamp}.csv"
