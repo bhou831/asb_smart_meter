@@ -77,6 +77,7 @@ with open(FILE_PATH, mode='w') as csv_file:
                          'frequency': energy_sensor.frequency*60/50,
                          'power': voltageA*120/640*current})
         
+        deinit_resources(spi_bus, cs)
         # del energy_sensor
         # gc.collect()
         time.sleep(MEASUREMENT_GRANULARITY)

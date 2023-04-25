@@ -125,6 +125,7 @@ def read_data():
         # if current > 3:
         #     send_msg()
 
+        deinit_resources(spi_bus, cs)
         # Wait for 3 second
         # del energy_sensor
         # gc.collect()
