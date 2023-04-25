@@ -31,6 +31,7 @@ MEASUREMENT_GRANULARITY = 4 # 4 second measurement granularity
 FILE_PATH = f"energy_data_{timestamp}.csv"
 
 current_lst = []
+voltage_lst = []
 
 def init_energy_sensor():
     spi_bus = busio.SPI(board.SCK, MISO=board.MISO, MOSI=board.MOSI)
@@ -55,27 +56,23 @@ with open(FILE_PATH, mode='w') as csv_file:
 
         # Read the energy data from the sensor
         sys0 = energy_sensor.sys_status0
-        voltageA = energy_sensor.line_voltageA
-        voltageC = energy_sensor.line_voltageC
-        if (lineFreq == 4485):  # split single phase
-            totalVoltage = voltageA + voltageC
-        else:
-            totalVoltage = voltageA  # 220-240v
-
+        voltage = energy_sensor.line_voltageA
         current = energy_sensor.line_currentA
         
         # filter out the irregular current spikes
-        if current > 3:
+        if len(voltage_lst) > 0 and (current > 3 or voltage < 70):
             current = current_lst[-1]
+            voltage = voltage_lst[-1]
         
+        voltage_lst.append(voltage)
         current_lst.append(current)
 
         # Write the energy data to the CSV file
         writer.writerow({'time': i, 
-                         'voltage': voltageA*120/640,
+                         'voltage': voltage*120/640,
                          'current': current,
                          'frequency': energy_sensor.frequency*60/50,
-                         'power': voltageA*120/640*current})
+                         'power': voltage*120/640*current})
         
         deinit_resources(spi_bus, cs)
         # del energy_sensor
