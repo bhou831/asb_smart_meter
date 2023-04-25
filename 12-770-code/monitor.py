@@ -111,8 +111,8 @@ def read_data():
         current = energy_sensor.line_currentA
         power = voltage * current
 
-        # if current > 3, treat as a outlier
-        if current > 3:
+        # Error handling for when the sensor returns bad data
+        if voltage < 70 or current > 3:
             voltage = y_data_voltage[-1]
             current = y_data_current[-1]
             power = voltage * current
