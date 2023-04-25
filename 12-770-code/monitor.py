@@ -107,7 +107,7 @@ def read_data():
         spi_bus, cs, energy_sensor = init_energy_sensor()
 
         # Read the energy data from the sensor, apply calibration, and append to list
-        voltage = (energy_sensor.line_voltageA * 120 / 640 + energy_sensor.line_voltageC * 120 / 640) / 2
+        voltage = energy_sensor.line_voltageA * 120 / 640
         current = energy_sensor.line_currentA
         power = voltage * current
 
