@@ -26,7 +26,7 @@ CurrentGainCT2 = 25498  # 25498 - SCT-013-000 100A/50mA
 
 # adjust the time threshold to collect data
 TIME_THRESHOLD = 1200 # 120 minutes observation time
-MEASUREMENT_GRANULARITY = 3 # 3 second measurement granularity
+MEASUREMENT_GRANULARITY = 4 # 4 second measurement granularity
 
 FILE_PATH = f"energy_data_{timestamp}.csv"
 
@@ -77,8 +77,8 @@ with open(FILE_PATH, mode='w') as csv_file:
                          'frequency': energy_sensor.frequency*60/50,
                          'power': voltageA*120/640*current})
         
-        del energy_sensor
-        gc.collect()
+        # del energy_sensor
+        # gc.collect()
         time.sleep(MEASUREMENT_GRANULARITY)
 # Print a message to indicate that the CSV file has been written
 print(f"Energy data saved to {FILE_PATH}")
