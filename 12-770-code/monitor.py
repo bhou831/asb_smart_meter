@@ -112,7 +112,7 @@ def read_data():
         power = voltage * current
 
         # Error handling for when the sensor returns bad data
-        if voltage < 70 or current > 3:
+        if (voltage < 70 or current > 3) and len(y_data_voltage) > 0:
             voltage = y_data_voltage[-1]
             current = y_data_current[-1]
             power = voltage * current
