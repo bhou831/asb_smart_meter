@@ -1,5 +1,11 @@
 {
     "OBSERVATION_TIME": 28800,
     "MEASUREMENT_GRANULARITY": 3,
-    "PORT": 8080
+    "PORT": 8080,
+    "theta_i_set": 1.5,
+    "theta_a_i_t": 20,
+    "delta_i": 1.0,
+    "T_ON": 1200,
+    "T_OFF": 3600,
+    "P_rated_i": 0.2
 }

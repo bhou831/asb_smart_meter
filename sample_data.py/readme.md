@@ -1,0 +1,1 @@
+# This directory is used to store sample fridge data from TCL paper 

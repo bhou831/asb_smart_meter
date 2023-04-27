@@ -1,1 +1,1 @@
-# This directory is where we store all data
+# This directory is where we store all data generated from `read-value.py`
