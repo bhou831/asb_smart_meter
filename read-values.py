@@ -8,6 +8,10 @@ from adafruit_bus_device.spi_device import SPIDevice
 import matplotlib.pyplot as plt
 import gc
 import datetime
+import json
+
+with open('config.json') as file:
+    configuration = json.load(file)
 
 # Generate a timestamp string
 timestamp = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
@@ -25,8 +29,8 @@ CurrentGainCT2 = 25498  # 25498 - SCT-013-000 100A/50mA
 # 46539 - Magnalab 100A w/ built in burden resistor
 
 # adjust the time threshold to collect data
-TIME_THRESHOLD = 1200 # 120 minutes observation time
-MEASUREMENT_GRANULARITY = 4 # 4 second measurement granularity
+OBSERVATION_TIME = configuration["OBSERVATION_TIME"] 
+MEASUREMENT_GRANULARITY = configuration["MEASUREMENT_GRANULARITY"]
 
 FILE_PATH = f"data/energy_data_{timestamp}.csv"
 
@@ -51,7 +55,7 @@ with open(FILE_PATH, mode='w') as csv_file:
     writer.writeheader()
 
     # Loop for 60 seconds
-    for i in range(TIME_THRESHOLD):
+    for i in range(OBSERVATION_TIME):
         spi_bus, cs, energy_sensor = init_energy_sensor()
 
         # Read the energy data from the sensor

@@ -14,6 +14,10 @@ from dash.dependencies import Input, Output
 import threading
 from msg import send_msg
 import gc
+import json
+
+with open('config.json') as file:
+    configuration = json.load(file)
 
 # ***** CALIBRATION SETTINGS *****/
 lineFreq = 4485  # 4485 for 60 Hz (North America)
@@ -27,9 +31,9 @@ CurrentGainCT1 = 38695  # 38695 - SCT-016 120A/40mA
 CurrentGainCT2 = 25498  # 25498 - SCT-013-000 100A/50mA
 # 46539 - Magnalab 100A w/ built in burden resistor
 
-OBSERVATION_TIME = 28800 # 120 minutes observation time
-MEASUREMENT_GRANULARITY = 3 # 4 second measurement granularity
-PORT = 8080 # port for the web server, default is 8080
+OBSERVATION_TIME = configuration["OBSERVATION_TIME"] 
+MEASUREMENT_GRANULARITY = configuration["MEASUREMENT_GRANULARITY"]
+PORT = configuration["PORT"] # port for the web server, default is 8080
 
 # ***** DASH APP *****/
 # Create a live chart for the voltage, current, and power
