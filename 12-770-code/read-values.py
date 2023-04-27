@@ -60,7 +60,7 @@ with open(FILE_PATH, mode='w') as csv_file:
         current = energy_sensor.line_currentA
         
         # filter out the irregular current spikes
-        if len(voltage_lst) > 0 and (current > 3 or voltage < 70):
+        if len(voltage_lst) > 0 and (current > 4 or voltage < 70):
             current = current_lst[-1]
             voltage = voltage_lst[-1]
         

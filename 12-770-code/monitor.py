@@ -28,7 +28,7 @@ CurrentGainCT2 = 25498  # 25498 - SCT-013-000 100A/50mA
 # 46539 - Magnalab 100A w/ built in burden resistor
 
 OBSERVATION_TIME = 28800 # 120 minutes observation time
-MEASUREMENT_GRANULARITY = 4 # 4 second measurement granularity
+MEASUREMENT_GRANULARITY = 3 # 4 second measurement granularity
 PORT = 8080 # port for the web server, default is 8080
 
 # ***** DASH APP *****/
@@ -112,7 +112,7 @@ def read_data():
         power = voltage * current
 
         # Error handling for when the sensor returns bad data
-        if (voltage < 70 or current > 3) and len(y_data_voltage) > 0:
+        if (voltage < 70 or current > 4) and len(y_data_voltage) > 0:
             voltage = y_data_voltage[-1]
             current = y_data_current[-1]
             power = voltage * current
