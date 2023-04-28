@@ -73,10 +73,10 @@ def write_to_queue():
 
         # Write the energy data to the CSV file
         data = {'time': int(time.time()),
-                         'voltage': voltage * 120 / 640,
-                         'current': current,
-                         'frequency': energy_sensor.frequency * 60 / 50,
-                         'power': voltage * 120 / 640 * current}
+                'voltage': voltage * 120 / 640,
+                'current': current,
+                'frequency': energy_sensor.frequency * 60 / 50,
+                'power': voltage * 120 / 640 * current}
         send_to_queue(data)
         deinit_resources(spi_bus, cs)
         del energy_sensor
