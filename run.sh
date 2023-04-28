@@ -2,7 +2,7 @@
 
 clear
 
-num_itr=10
+num_itr=10000
 
 for i in $(seq 1 $num_itr); do
   echo "Starting iteration $i of read-values.py"
