@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # This script will run read-value.py, terminate it after 50 minutes, and repeat this process 10 times.
-
+cd /home/proj770/asb_smart_meter
 # Loop 10 times
 for i in {1..5}; do
   echo "Starting iteration $i of read-value.py"
