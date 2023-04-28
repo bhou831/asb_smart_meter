@@ -7,5 +7,7 @@
     "delta_i": 1.0,
     "T_ON": 1200,
     "T_OFF": 3600,
-    "P_rated_i": 0.2
+    "P_rated_i": 0.2,
+    "HOST": "localhost",
+    "QUEUE": "energy_data"
 }

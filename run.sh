@@ -2,21 +2,18 @@
 
 # This script will run read-value.py, terminate it after 50 minutes, and repeat this process 10 times.
 # Loop 10 times
-for i in {1..10}; do
+clear
+python3 consumer.py
+
+num_itr=10
+
+for i in $(seq 1.. $num_itr); do
   echo "Starting iteration $i of read-values.py"
   
   # Run read-value.py in the background and save its process ID (PID)
-  python3 read-values.py &
-  read_value_pid=$!
+  python3 read-values.py
   
   # Wait for 50 minutes (3000 seconds)
-  sleep 3000s
-  
-  # Terminate the read-value.py process using its PID
-  echo "Terminating iteration $i of read-value.py"
-  kill -2 $read_value_pid
-
-  # Wait a bit before starting the next iteration
   sleep 3s
 done
 
