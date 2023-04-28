@@ -13,3 +13,5 @@ def send_msg():
     to="+14845412289"
     )
     print(message.sid)
+
+send_msg()
