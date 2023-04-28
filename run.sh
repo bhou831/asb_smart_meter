@@ -10,14 +10,13 @@ for i in {1..5}; do
   read_value_pid=$!
   
   # Wait for 50 minutes (3000 seconds)
-  sleep 30s
+  sleep 31s
   
   # Terminate the read-value.py process using its PID
   echo "Terminating iteration $i of read-value.py"
-  kill -2 $read_value_pid
 
   # Wait a bit before starting the next iteration
-  sleep 3s
+  sleep 2s
 done
 
 echo "All 10 iterations completed."
