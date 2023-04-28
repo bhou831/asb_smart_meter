@@ -7,8 +7,6 @@ from atm90e32 import ATM90e32
 import gc
 import datetime
 import json
-import sys
-import traceback
 
 with open('config.json') as file:
     configuration = json.load(file)
