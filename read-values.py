@@ -86,18 +86,6 @@ def write_to_csv():
     # Print a message to indicate that the CSV file has been written
     print(f"Energy data saved to {FILE_PATH}")
 
-# Retry the function if OSError is encountered
-def write_to_csv_wrapper(retry_count=10):
-    try:
-        write_to_csv()
-    except OSError as e:
-        if e.errno == 24 and retry_count > 0:  # Error 24: Too many open files
-            print(f"OSError encountered: {e}. Retrying...")
-            time.sleep(1)  # Give some time for the system to close open files
-            write_to_csv_wrapper(retry_count=retry_count - 1)  # Retry the function with reduced retry count
-        else:
-            print(f"Error occurred: {e}", file=sys.stderr)
-            traceback.print_exc()
 
 if __name__ == "__main__":
-    write_to_csv_wrapper()
+    write_to_csv()
