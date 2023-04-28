@@ -1,5 +1,5 @@
 {
-    "OBSERVATION_TIME": 30,
+    "OBSERVATION_TIME": 1000,
     "MEASUREMENT_GRANULARITY": 3,
     "PORT": 8080,
     "theta_i_set": 1.5,
