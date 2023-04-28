@@ -6,7 +6,7 @@ for i in {1..5}; do
   echo "Starting iteration $i of read-values.py"
   
   # Run read-value.py in the background and save its process ID (PID)
-  python3 read-value.py &
+  python3 read-values.py &
   read_value_pid=$!
   
   # Wait for 50 minutes (3000 seconds)
