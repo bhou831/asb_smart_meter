@@ -1,7 +1,6 @@
 #!/bin/bash
 
 clear
-
 num_itr=10000
 
 for i in $(seq 1 $num_itr); do
