@@ -78,7 +78,7 @@ def write_to_csv():
                             'current': current,
                             'frequency': energy_sensor.frequency*60/50,
                             'power': voltage*120/640*current})
-            
+            csv_file.flush()
             deinit_resources(spi_bus, cs)
             del energy_sensor
             gc.collect()
