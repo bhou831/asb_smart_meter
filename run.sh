@@ -17,7 +17,7 @@ for i in {1..5}; do
   kill -2 $read_value_pid
 
   # Wait a bit before starting the next iteration
-  sleep 5s
+  sleep 3s
 done
 
 echo "All 10 iterations completed."
