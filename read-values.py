@@ -73,7 +73,7 @@ def write_to_csv():
             current_lst.append(current)
 
             # Write the energy data to the CSV file
-            writer.writerow({'time': i, 
+            writer.writerow({'time': int(time.time()), 
                             'voltage': voltage*120/640,
                             'current': current,
                             'frequency': energy_sensor.frequency*60/50,
