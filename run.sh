@@ -7,7 +7,7 @@ python3 consume.py
 
 num_itr=10
 
-for i in $(seq 1.. $num_itr); do
+for i in $(seq 1 $num_itr); do
   echo "Starting iteration $i of read-values.py"
   
   # Run read-value.py in the background and save its process ID (PID)
