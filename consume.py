@@ -9,13 +9,15 @@ RABBITMQ_HOST = configuration["HOST"]
 QUEUE_NAME = configuration["QUEUE"]
 result_lst = []
 power_lst = []
+on_duration = 0
 
 def monitor(power_lst):
-    on_duration = 0
+    global on_duration
     for i in range(len(power_lst)):
         if power_lst[i] > 5:
             on_duration += 1
             if on_duration > 400:
+                print("\n"*3, "Fridge Door Open, Msg sent", "\n"*3)
                 send_msg()
         else:
             on_duration = 0
