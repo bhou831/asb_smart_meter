@@ -3,7 +3,7 @@
 # This script will run read-value.py, terminate it after 50 minutes, and repeat this process 10 times.
 # Loop 10 times
 clear
-python3 consumer.py
+python3 consume.py
 
 num_itr=10
 
