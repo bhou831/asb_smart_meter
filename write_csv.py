@@ -84,3 +84,6 @@ def write_to_csv():
 
     # Print a message to indicate that the CSV file has been written
     print(f"Energy data saved to {FILE_PATH}")
+
+if __name__ == "__main__":
+    write_to_csv()
