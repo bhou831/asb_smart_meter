@@ -73,10 +73,10 @@ def write_to_csv():
 
         # Write the energy data to the CSV file
         writer.writerow({'time': int(time.time()),
-                         'voltage': voltage * 120 / 640,
+                         'voltage': voltage * 120 / 320,
                          'current': current,
                          'frequency': energy_sensor.frequency * 60 / 50,
-                         'power': voltage * 120 / 640 * current})
+                         'power': voltage * 120 / 320 * current})
         csv_file.flush()
         deinit_resources(spi_bus, cs)
         del energy_sensor
