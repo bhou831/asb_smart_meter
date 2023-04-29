@@ -9,5 +9,6 @@
     "T_OFF": 3600,
     "P_rated_i": 0.2,
     "HOST": "localhost",
-    "QUEUE": "energy_data"
+    "QUEUE": "energy_data",
+    "FILE_PATH": "data/energy_data.csv"
 }
