@@ -1,7 +1,7 @@
 #!/bin/bash
 
 clear
-num_itr=30000
+num_itr=40000
 
 for i in $(seq 1 $num_itr); do
   echo "Starting iteration $i of read-values.py"
@@ -11,4 +11,4 @@ for i in $(seq 1 $num_itr); do
   sleep 3s
 done
 
-echo "All 30000 iterations completed."
+echo "All 40000 iterations completed."
